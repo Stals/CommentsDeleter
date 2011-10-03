@@ -1,0 +1,3 @@
+// commented text
+not commented text
+some text //is 
