@@ -1,6 +1,10 @@
 # Delets every char that follows a comment in that line
 #TODO delete multi-line comments
+#argv's should look like this:
+# commentsDeleter.py -cpp "saveToDir" "file 1" "file 2" "ect..."
+
 import sys
+import os
 languages = {"-cpp"    : [ '//', ('/*', '*/') ],
              "-java"   : [ '//', ('/*', '*/') ],
              "-delphi" : [ '//', ('{', '}') ],
@@ -22,7 +26,7 @@ def deleteSingleLineComments(lines,singleComment):#TODO do not delete line separ
     print (newLines)
     return newLines
 
-def main():
+def main(): #TODO make separate functions for better understanding
     comments = []
     if len(sys.argv) > 1:
         # Get comments and files
@@ -50,11 +54,18 @@ def main():
             f.close()
 
             newLines = deleteSingleLineComments(lines, comments[0])
-            #newLines = deleteMultiLineComments(newLines,comments[1:])
+            #newLines = deleteMultiLineComments(newLines,comments[1])
 
-            f = open("2.txt", 'w')
+            if not os.path.isdir("withoutComments"):
+                os.mkdir("withoutComments")
+            f = open("withoutComments\\"+filename, 'w')
             f.writelines(newLines)
             f.close()
+
+	else:
+		#if no arguments were passed
+		print("Expected: commentsDeleter.py -language 'saveToDir' 'file 1' 'file 2' 'ect...'")
+
 
 if __name__ == '__main__':
   main()
