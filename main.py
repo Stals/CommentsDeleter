@@ -27,7 +27,8 @@ def deleteSingleLineComments(lines,singleComment):#TODO do not delete line separ
     return newLines
 
 def main(): #TODO make separate functions for better understanding
-    comments = []
+    comments = [] #stores comments to delete
+    files = [] #stores files that need to be cleaned
     if len(sys.argv) > 1:
         # Get comments and files
         if sys.argv[1][0] == '-':
