@@ -2,6 +2,15 @@
 #TODO delete multi-line comments
 #argv's should look like this:
 # commentsDeleter.py -cpp "saveToDir" "file 1" "file 2" "ect..."
+#TODO - auto. give a key depending on file extension
+#TODO - all deletes comments for all the languages
+
+
+#TODO Удаление должно происходить по тексту, а не по строкам, и нужно удалять всё что после комментария но до переноса на новую строку
+# Это касается как сингл- так и мулти- лайн комментариев
+# Пока есть идея только посимвольно копировать в строку, пока нет комментария, потом пропускать символы, до тех пор пока не будет \n
+# А в мултилайн  -  до тех пор пока не найдётся закрывающий комментарий
+# И на выходе функция выдаёт текст 
 
 import sys
 import os
@@ -12,6 +21,10 @@ languages = {"-cpp"    : [ '//', ('/*', '*/') ],
              "-ruby"   : [ '#',  ('=begin', '=end') ]
              }
 
+flags = ["-auto", # gives a key depending on file extension
+         "-all"]  # deletes comments for all the languages
+
+#TODO  поддержка нескольких сингл-лайн комментариев для одного языка
 def deleteSingleLineComments(lines,singleComment):#TODO do not delete line separators
     newLines = []
     for line in lines:
