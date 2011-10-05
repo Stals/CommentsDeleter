@@ -1,3 +1,4 @@
 // commented text
 not commented text
 some text //is #commented
+"""multi line comment in python"""
