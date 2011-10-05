@@ -60,9 +60,9 @@ def main(): #TODO make separate functions for better understanding
             comments = [ input("Input single line comment:"),
                        ( input("Input begin of multi-line comment:"),
                          input("Input end if multi-line comment:") )]
-
         # Now we have "comments" to delete from "files"
         for filename in files:
+
             f = open(filename, 'r')
             lines = f.readlines()
             f.close()
@@ -76,10 +76,10 @@ def main(): #TODO make separate functions for better understanding
             f.writelines(newLines)
             f.close()
 
-	else:
-		#if no arguments were passed
-		print("Expected: commentsDeleter.py -language 'saveToDir' 'file 1' 'file 2' 'ect...'")
+    else:
+        #if no arguments were passed
+        print("Expected: commentsDeleter.py -language 'saveToDir' 'file 1' 'file 2' 'ect...'")
 
 
 if __name__ == '__main__':
-  main()
+    main()
