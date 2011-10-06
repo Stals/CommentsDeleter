@@ -34,20 +34,17 @@ def deleteSingleLineComments(text, singleComment):#TODO Rewrite coz this is veee
 		commentEndIndex = text.find('\n',commentBeginIndex)
 		# copy  everything except commented text
 		text = text[:commentBeginIndex] + text[commentEndIndex:]
-
 	return text
 
 #TODO  поддержка нескольких мульти-лайн комментариев для одного языка
 def deleteMultiLineComments(text, comment):
-
+	#
 	while (comment[0] in text) and (comment[1] in text) :
 		commentBeginIndex = text.find(comment[0])
 		commentEndIndex = text.find(comment[1], commentBeginIndex + len(comment[1]))
 		# copy  everything except commented text
 		text = text[:commentBeginIndex] + \
 		       text[commentEndIndex + len(comment[1]):]
-
-
 	return text
 
 
@@ -58,12 +55,12 @@ def getTextFromFile(filename):
 	return text
 
 
-def saveTextToFile(dirName, filename, newText):
+def saveTextToFile(dirName, filename, text):
 	if not os.path.isdir(dirName):
 		#if directory does not exist - create it
 		os.mkdir(dirName)
 	f = open(dirName + "\\" + filename, 'w')
-	f.write(newText)
+	f.write(text)
 	f.close()
 
 
