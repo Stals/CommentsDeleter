@@ -71,7 +71,35 @@ def getCommentsFromUser():
 	return [singleLineComment, (multiLineCommentBegin, multiLineCommentEnd)]
 
 
-def main(): #TODO make separate functions for easier understanding
+def main(): #TODO Нужно переписать, а то вообще не возможно уследить за логикой,
+			#TODO нужно сдлеть отдельную функцию которая будет колечать комментс ( в том числе вызывать функцию getCommentsFromUser())
+			#ТОесть в неё передаётся флаг - а она возвращает те комментарии которые соответствуют этому флагу
+
+	"""
+	files = [] # stores files that need to be cleaned
+	flag = "" # stores flag passed as an argument
+	if len(sys.argv) > 1:
+		if (sys.argv[1][0] == '-') && (( len(sys.argv) > 2):
+			#if first argument is a flag AND There are files after the flag
+			flag = argv[1]
+			files = argv[2:]
+		else:
+			flag = ""
+			files = argv[1:]
+	else:
+		# if no arguments were passed
+		print("Expected: commentsDeleter.py -language 'saveToDir' 'file 1' 'file 2' 'ect...'")
+
+	comments = getComments(flag) #TODO Should ask user to give comments if flag == ""
+	for filename in files:
+		text = getTextFromFile(filename)
+		newText = deleteComments(text, comments)
+		dirName = "withoutComments"
+		saveTextToFile(dirName, filename, newText)
+	"""
+
+
+
 	comments = [] # stores comments to delete
 	files = [] # stores files that need to be cleaned
 	flag = "" # stores flag passed as an argument
@@ -96,10 +124,9 @@ def main(): #TODO make separate functions for easier understanding
 			# Let user input comments in a console
 			comments = getCommentsFromUser()
 
-		# Now we have "comments" to delete from "files"
+########################################################################################################################
 		for filename in files:
 			#Get text from file , delete comments and save this text back to file
-
 			text = getTextFromFile(filename)
 
 			newText = "" # stores text without comments
