@@ -1,9 +1,8 @@
 # Delets every char that follows a comment in that line
-#TODO delete multi-line comments
-#argv's should look like this:
+# argv's should look like this:
 # commentsDeleter.py -cpp "saveToDir" "file 1" "file 2" "ect..."
-#TODO - auto. give a key depending on file extension
-#TODO - all deletes comments for all the languages
+#TODO - auto.
+#TODO - all Когда сделаю поддержку нескольких вариантов комментариев для мультилйна и синглайна  - когда выбирают -all , нужно создать comments сложа все комментарии для других языков
 
 
 #TODO Удаление должно происходить по тексту, а не по строкам, и нужно удалять всё что после комментария но до переноса на новую строку
@@ -14,6 +13,9 @@
 
 import sys
 import os
+#TODO подумать о переназвании languages и comments
+
+#TODO also add file extension for each language
 languages = {"-cpp"    : [ '//', ('/*', '*/') ],
              "-java"   : [ '//', ('/*', '*/') ],
              "-delphi" : [ '//', ('{', '}') ],
