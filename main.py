@@ -33,7 +33,7 @@ def deleteSingleLineComments(text, singleComment):#TODO Rewrite coz this is veee
 		commentBeginIndex = text.find(singleComment)
 		commentEndIndex = text.find('\n',commentBeginIndex)
 		# copy  everything except commented text
-		text = text[:commentBeginIndex]+text[commentEndIndex:]
+		text = text[:commentBeginIndex] + text[commentEndIndex:]
 
 	return text
 
@@ -50,7 +50,24 @@ def deleteMultiLineComments(text, comment):
 
 	return text
 
-def main(): #TODO make separate functions for better understanding
+
+def getTextFromFile(filename):
+	f = open(filename, 'r')
+	text = f.read()
+	f.close()
+	return text
+
+
+def saveTextToFile(dirName, filename, newText):
+	if not os.path.isdir(dirName):
+		#if directory does not exist - create it
+		os.mkdir(dirName)
+	f = open(dirName + "\\" + filename, 'w')
+	f.write(newText)
+	f.close()
+
+
+def main(): #TODO make separate functions for easier understanding
 	comments = [] #stores comments to delete
 	files = [] #stores files that need to be cleaned
 	if len(sys.argv) > 1:
@@ -60,6 +77,9 @@ def main(): #TODO make separate functions for better understanding
 			files = sys.argv[2:]
 			if sys.argv[1] in languages.keys():
 				comments = languages[sys.argv[1]]
+
+			if sys.argv[1] in flags:#TODO
+				pass
 			else:
 				print("Wrong Key\nKnown keys:")
 				for language in languages:
@@ -71,21 +91,18 @@ def main(): #TODO make separate functions for better understanding
 			comments = [ input("Input single line comment:"),
 					( input("Input begin of multi-line comment:"),
 					  input("Input end if multi-line comment:") )]
-			# Now we have "comments" to delete from "files"
+		# Now we have "comments" to delete from "files"
 		for filename in files:
+			#Get text from file , delete comments and save this text back to file
+			#TODO save/load functions
 
-			f = open(filename, 'r')
-			text = f.read()
-			f.close()
+			text = getTextFromFile(filename)
 
 			newText = deleteSingleLineComments(text, comments[0])
-			newText = deleteMultiLineComments(newText,comments[1])
+			newText = deleteMultiLineComments(newText, comments[1])
 
-			if not os.path.isdir("withoutComments"):
-				os.mkdir("withoutComments")
-			f = open("withoutComments\\" + filename, 'w')
-			f.write(newText)
-			f.close()
+			dirName = "withoutComments"
+			saveTextToFile(dirName, filename, newText)
 
 	else:
 		#if no arguments were passed
