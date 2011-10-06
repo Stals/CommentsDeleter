@@ -67,18 +67,27 @@ def saveTextToFile(dirName, filename, newText):
 	f.close()
 
 
+def getCommentsFromUser():
+	singleLineComment = input("Input single line comment:")
+	multiLineCommentBegin = input("Input begin of multi-line comment:")
+	multiLineCommentEnd = input("Input end if multi-line comment:")
+	return [singleLineComment, (multiLineCommentBegin, multiLineCommentEnd)]
+
+
 def main(): #TODO make separate functions for easier understanding
-	comments = [] #stores comments to delete
-	files = [] #stores files that need to be cleaned
+	comments = [] # stores comments to delete
+	files = [] # stores files that need to be cleaned
+	flag = "" # stores flag passed as an argument
 	if len(sys.argv) > 1:
 		# Get comments and files
 		if sys.argv[1][0] == '-':
+			flag = sys.argv[1]
 			# If the first argument is a key (-cpp,-java,ect)
 			files = sys.argv[2:]
-			if sys.argv[1] in languages.keys():
+			if flag in languages.keys():
 				comments = languages[sys.argv[1]]
 
-			if sys.argv[1] in flags:#TODO
+			elif flag in flags:#TODO
 				pass
 			else:
 				print("Wrong Key\nKnown keys:")
@@ -88,24 +97,33 @@ def main(): #TODO make separate functions for easier understanding
 		else:
 			files = sys.argv[1:]
 			# Let user input comments in a console
-			comments = [ input("Input single line comment:"),
-					( input("Input begin of multi-line comment:"),
-					  input("Input end if multi-line comment:") )]
+			comments = getCommentsFromUser()
+
 		# Now we have "comments" to delete from "files"
 		for filename in files:
 			#Get text from file , delete comments and save this text back to file
-			#TODO save/load functions
 
 			text = getTextFromFile(filename)
 
-			newText = deleteSingleLineComments(text, comments[0])
-			newText = deleteMultiLineComments(newText, comments[1])
+			newText = "" # stores text without comments
+			if flag == "-all":
+				newText = text
+				for languageComments in languages.values():
+					newText = deleteSingleLineComments(newText, languageComments[0])
+					newText = deleteMultiLineComments(newText, languageComments[1])
+			elif flag == "-auto":
+				pass
+			else:
+				# if language or no flag was selected
+				newText = deleteSingleLineComments(text, comments[0])
+				newText = deleteMultiLineComments(newText, comments[1])
 
+			print( newText )
 			dirName = "withoutComments"
 			saveTextToFile(dirName, filename, newText)
 
 	else:
-		#if no arguments were passed
+		# if no arguments were passed
 		print("Expected: commentsDeleter.py -language 'saveToDir' 'file 1' 'file 2' 'ect...'")
 
 
