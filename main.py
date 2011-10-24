@@ -1,9 +1,12 @@
 # Delets every char that follows a comment in that line
 # argv's should look like this:
 # commentsDeleter.py -cpp "file 1" "file 2" "ect..."
+# NOTE: Currently only language flags are working, also you cant choose directory to save files to
+
 #TODO - auto.
 #TODO - all Когда сделаю поддержку нескольких вариантов комментариев для мультилйна и синглайна  - когда выбирают -all , нужно создать comments сложа все комментарии для других языков
 #TODO подумать о переназвании comments
+
 
 import sys
 import os
@@ -18,11 +21,11 @@ class Language:
 
 
 languages = []
-languages.append( Language( 'C++',    '-cpp',    '//', ('/*', '*/'),       ('.cpp', '.h', '.hpp') ) )
-languages.append( Language( 'JAVA',   '-java',   '//', ('/*', '*/'),       ('') ) )
-languages.append( Language( 'Delphi', '-delphi', '//', ('{', '}'),         ('') ) )
-languages.append( Language( 'Python', '-python', '#',  ('"""', '"""'),     ('.py') ) )
-languages.append( Language( 'Ruby',   '-ruby',   '#',  ('=begin', '=end'), ('.rb') ) )
+languages.append( Language( 'C++',    '-cpp',    ['//',], [('/*', '*/'),],       ('.cpp', '.h', '.hpp') ) )
+languages.append( Language( 'JAVA',   '-java',   ['//',], [('/*', '*/'),],       ('') ) )
+languages.append( Language( 'Delphi', '-delphi', ['//',], [('{', '}'),],         ('') ) )
+languages.append( Language( 'Python', '-python', ['#',],  [('"""', '"""'),],     ('.py') ) )
+languages.append( Language( 'Ruby',   '-ruby',   ['#',],  [('=begin', '=end'),], ('.rb') ) )
 
 
 flags = ["-auto", # gives a key depending on file extension
@@ -52,8 +55,13 @@ def deleteMultiLineComments(text, comment):
 
 
 def deleteComments(text, comments):
-	newText = deleteMultiLineComments(text , comments[1])
-	newText = deleteSingleLineComments(newText, comments[0])
+	newText = text
+	for comment in comments[0]:
+		#for all single Line Comments
+		newText = deleteSingleLineComments(newText, comment)
+	for comment in comments[1]:
+		#for all multi-line comments
+		newText = deleteMultiLineComments(newText, comment)
 	return newText
 
 
@@ -78,7 +86,7 @@ def getCommentsFromUser():
 	singleLineComment = input("Input single line comment:")
 	multiLineCommentBegin = input("Input begin of multi-line comment:")
 	multiLineCommentEnd = input("Input end if multi-line comment:")
-	return [singleLineComment, (multiLineCommentBegin, multiLineCommentEnd)]
+	return [[singleLineComment,], [(multiLineCommentBegin, multiLineCommentEnd),]]
 
 
 def getComments(flag):
@@ -87,7 +95,7 @@ def getComments(flag):
 	else:
 		for language in languages:
 			if flag == language.flag:
-				return [language.singleLineComment, (language.multiLineComment[0], language.multiLineComment[1])]
+				return [language.singleLineComment, language.multiLineComment]
 
 		#if flag is not known
 		print("Wrong flag\nKnown flags:")
