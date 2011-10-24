@@ -32,7 +32,6 @@ flags = ["-auto", # gives a key depending on file extension
          "-all"]  # deletes comments for all the languages
 
 
-#TODO  поддержка нескольких сингл-лайн комментариев для одного языка
 def deleteSingleLineComments(text, singleComment):#TODO Rewrite coz this is veeeery bad solutuion for big files ( calles copy for the whole text for each comment )
 
 	while singleComment in text :
@@ -43,7 +42,6 @@ def deleteSingleLineComments(text, singleComment):#TODO Rewrite coz this is veee
 	return text
 
 
-#TODO  поддержка нескольких мульти-лайн комментариев для одного языка
 def deleteMultiLineComments(text, comment):
 	while (comment[0] in text) and (comment[1] in text) :
 		commentBeginIndex = text.find(comment[0])
@@ -105,6 +103,7 @@ def getComments(flag):
 					multiLineComments.append(comment)
 		return [singleLineComments, multiLineComments]
 	else:
+		#check if flag is from languages
 		for language in languages:
 			if flag == language.flag:
 				return [language.singleLineComment, language.multiLineComment]
