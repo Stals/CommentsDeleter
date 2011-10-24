@@ -91,7 +91,19 @@ def getCommentsFromUser():
 
 def getComments(flag):
 	if flag == "":
+		# if flag was not specified from console
 		return getCommentsFromUser()
+	elif flag == "-all":
+		singleLineComments = []
+		multiLineComments = []
+		for language in languages:
+			for comment in language.singleLineComment:
+				if comment not in singleLineComments:
+					singleLineComments.append(comment)
+			for comment in language.multiLineComment:
+				if comment not in multiLineComments:
+					multiLineComments.append(comment)
+		return [singleLineComments, multiLineComments]
 	else:
 		for language in languages:
 			if flag == language.flag:
@@ -101,6 +113,9 @@ def getComments(flag):
 		print("Wrong flag\nKnown flags:")
 		for language in languages:
 			print ("{0} for {1}".format(language.flag, language.name))
+		print("")
+		print("-all for all languages together")
+		#print("-auto to auto-detect comments from file extension")
 		exit(0)
 
 
