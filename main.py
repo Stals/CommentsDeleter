@@ -37,8 +37,13 @@ def deleteSingleLineComments(text, singleComment):#TODO Rewrite coz this is veee
 	while singleComment in text :
 		commentBeginIndex = text.find(singleComment)
 		commentEndIndex = text.find('\n',commentBeginIndex)
+
 		# copy  everything except commented text
-		text = text[:commentBeginIndex] + text[commentEndIndex:]
+		if commentEndIndex == -1:
+			# this could happen if comment is at the last line of the file and there is no \n ending this line
+			text = text[:commentBeginIndex]
+		else:
+			text = text[:commentBeginIndex] + text[commentEndIndex:]
 	return text
 
 
