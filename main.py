@@ -4,8 +4,8 @@
 # NOTE: Currently only language flags are working, also you cant choose directory to save files to
 
 #TODO - auto.
-#TODO - all Когда сделаю поддержку нескольких вариантов комментариев для мультилйна и синглайна  - когда выбирают -all , нужно создать comments сложа все комментарии для других языков
-#TODO подумать о переназвании comments
+
+#TODO think on re-naming comments
 
 
 import sys
