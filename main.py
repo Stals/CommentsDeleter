@@ -48,12 +48,18 @@ def deleteSingleLineComments(text, singleComment):#TODO Rewrite coz this is veee
 
 
 def deleteMultiLineComments(text, comment):
-	while (comment[0] in text) and (comment[1] in text) :
+	# this is an endless loop with an exit condition
+	while True :
 		commentBeginIndex = text.find(comment[0])
 		commentEndIndex = text.find(comment[1], commentBeginIndex + len(comment[1])) # TODO mb len(comment[0]) needed?
 		# copy  everything except commented text
-		text = text[:commentBeginIndex] + \
-		       text[commentEndIndex + len(comment[1]):]
+		if (commentBeginIndex != -1) and (commentEndIndex != -1):
+			# only if both comments were found
+			text = text[:commentBeginIndex] + \
+		    	   text[commentEndIndex + len(comment[1]):]
+		else:
+			#if one of the comments were not found - break the loop
+			break
 	return text
 
 
