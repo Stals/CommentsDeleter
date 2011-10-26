@@ -64,13 +64,17 @@ def deleteMultiLineComments(text, comment):
 
 
 def deleteComments(text, comments):
+	#NOTE: deleting single line comments first we may suddenly delete end of a multiline comment
 	newText = text
-	for comment in comments[0]:
-		#for all single Line Comments
-		newText = deleteSingleLineComments(newText, comment)
+
 	for comment in comments[1]:
 		#for all multi-line comments
 		newText = deleteMultiLineComments(newText, comment)
+
+	for comment in comments[0]:
+		#for all single Line Comments
+		newText = deleteSingleLineComments(newText, comment)
+	
 	return newText
 
 
